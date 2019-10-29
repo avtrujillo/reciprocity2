@@ -87,3 +87,5 @@ gem 'faker'
 
 gem 'webpacker'
 gem 'react-rails'
+
+gem "sorcery", "~> 0.14.0"
