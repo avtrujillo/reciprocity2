@@ -1,10 +1,18 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
+=begin
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
   devise :omniauthable, :omniauth_providers => [:facebook]
+=end
+  authenticates_with_sorcery!
+  validates :password, length: { minimum: 6 }, if: -> { new_record? || changes[:crypted_password] }
+  validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
+  validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
+
+  validates :email, uniqueness: true
 
   has_many :outgoing, foreign_key: "checker_id", class_name: 'Check', :dependent => :destroy
   has_many :incoming, foreign_key: "checked_id", class_name: 'Check', :dependent => :destroy
