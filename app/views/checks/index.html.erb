@@ -9,7 +9,7 @@
   <br><br>
   If you come across a bug, check <a href="https://docs.google.com/document/d/13miL_j8WlWRfbQ0FNo3SKhHRYQm8dTUBJYjU7xV5IR4/edit#heading=h.rmvdkob5bbrz">this doc</a> and <a href="https://github.com/sdspikes/reciprocity2/issues">the issues on the GitHub repo</a>, and if you don't see your issue there, add it in whichever place is more comfortable for you!
   <br><br>
-  Please <%= link_to('Sign in', new_user_session_path) %> or <%= link_to('Register', new_user_registration_path) %>!
+  Please <%= link_to('Sign in', '/sign_in') %> or <%= link_to('Register', '/sign_up') %>!
 <% else %>
   <%= react_component("Checks", { activities: @activities, users_to_activities: @users_to_activities, users: @users }) %>
 <% end %>

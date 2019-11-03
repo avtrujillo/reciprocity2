@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get 'password_resets/new'
+  get 'password_resets/create'
+  get 'password_resets/edit'
+  get 'password_resets/update'
+  get 'sessions/new'
+  get 'sessions/create'
+  get 'sessions/destroy'
   resources :profile_items, only: [:create, :update, :destroy]
   resources :profile_item_categories
   resources :privacy_group_members, only: [:create, :update, :destroy]
@@ -15,7 +22,7 @@ Rails.application.routes.draw do
   end
   resources :connection_requests
   resources :connections
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users#, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   resources :categories
   resources :checks, only: [:create, :index]
   post "api/profiles/text_profile_item", to: "profile_items#create_text_profile_item", as: "create_text_profile_item"
@@ -35,6 +42,14 @@ Rails.application.routes.draw do
   resources :text_profile_item
   resources :gender
   resources :profile_item_responses
+
+  get 'sign_in', to: 'sessions#new'
+  post 'sign_in', to: 'sessions#create'
+
+  get 'sign_up', to: 'users#new'
+  post 'sign_up', to: 'users#create'
+
+  resources :password_resets
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
