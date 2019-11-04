@@ -25,15 +25,22 @@
             <li class="nav-item active nav-link"><%= link_to('Manage Privacy', privacy_groups_path) %></li>
             <li class="nav-item active nav-link"><%= link_to('Connections', connections_path) %></li>
             <li class="nav-item active nav-link"><%= link_to('My Account', edit_user_path(current_user)) %></li>
-            <li class="nav-item nav-link"><%= link_to "Sign out", sessions_destroy_path, :method => :delete %></li>
+            <li class="nav-item nav-link"><%= link_to "Sign out", '/sessions', :method => :delete %></li>
           <% else %>
-            <li class="nav-item active nav-link"><%= link_to('Sign in', sessions_new_path) %></li>
+            <li class="nav-item active nav-link"><%= link_to('Sign in', new_session_path) %></li>
             <li class="nav-item nav-link"><%= link_to('Sign up', new_user_path) %></li>
           <% end %>
           <!-- for putting more stuff in the nav bar
             https://getbootstrap.com/docs/4.0/components/navbar/ -->
       </div>
     </nav>
+
+    <div class="container">
+      <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+      <% end %>
+    </div>
+
     <%= yield %>
     <!-- Footer -->
     <footer class="page-footer font-small blue pt-4">
