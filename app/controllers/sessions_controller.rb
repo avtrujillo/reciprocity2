@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :require_login, except: :destroy
+
   def new
     @user = User.new
   end
@@ -6,6 +8,7 @@ class SessionsController < ApplicationController
   def create
     @user = login(params[:email], params[:password])
     if @user
+      @user.sign_in_count += 1
       redirect_back_or_to(:users, notice: 'Login successful')
     else
       flash.new[:alert] = 'Login failed'
@@ -14,5 +17,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    logout
+    flash[:success] = 'Logout successful'
+    redirect_to '/sign_in'
   end
 end
