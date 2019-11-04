@@ -1,11 +1,4 @@
 Rails.application.routes.draw do
-  get 'password_resets/new'
-  get 'password_resets/create'
-  get 'password_resets/edit'
-  get 'password_resets/update'
-  get 'sessions/new'
-  get 'sessions/create'
-  get 'sessions/destroy'
   resources :profile_items, only: [:create, :update, :destroy]
   resources :profile_item_categories
   resources :privacy_group_members, only: [:create, :update, :destroy]
@@ -49,7 +42,8 @@ Rails.application.routes.draw do
   get 'sign_up', to: 'users#new'
   post 'sign_up', to: 'users#create'
 
-  resources :sessions
+  resources :sessions, only: [:new, :create]
+  delete :sessions, to: 'sessions#destroy'
 
   resources :password_resets
   resources :users
