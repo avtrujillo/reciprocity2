@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   end
   resources :connection_requests
   resources :connections
-  devise_for :users#, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  #devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   resources :categories
   resources :checks, only: [:create, :index]
   post "api/profiles/text_profile_item", to: "profile_items#create_text_profile_item", as: "create_text_profile_item"
@@ -49,7 +49,10 @@ Rails.application.routes.draw do
   get 'sign_up', to: 'users#new'
   post 'sign_up', to: 'users#create'
 
+  resources :sessions
+
   resources :password_resets
+  resources :users
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
