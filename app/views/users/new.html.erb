@@ -1,36 +1,43 @@
+<h1>Sign up</h1>
 
 <%= form_for :user do |f| %>
   <%#= devise_error_messages! %>
 
   <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+    <%= f.label :name %>
+    <%= f.text_field :name, autofocus: true, autocomplete: "name" %><br />
   </div>
 
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.label :email %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %><br />
   </div>
 
   <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
       <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
+    <% end %>
+    <%= f.password_field :password, autocomplete: "off" %><br />
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
+    <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
 
-  <div class="field">
-    <%= f.check_box :remember_me %>
-    <%= f.label :remember_me %>
-  </div>
+    <label for="remember_me" class="checkbox inline">
+      <input type="checkbox" name="remember_me" id="remember_me">
+      Remember me
+    </label>
 
-  <div class="actions">
+
+<!--  <div class="field">
+    <%#= f.check_box :remember_me %>
+    <%#= f.label :remember_me %>
+  </div>-->
+
+  <br /><div class="actions">
     <%= f.submit "Sign up" %>
   </div>
 <% end %>
