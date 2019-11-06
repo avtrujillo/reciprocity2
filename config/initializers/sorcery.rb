@@ -1,7 +1,7 @@
 # Rails.application.config.sorcery.submodules = [:user_activation, :http_basic_auth, :remember_me, :reset_password, :session_timeout, :brute_force_protection, :activity_logging, :external]
 
 Rails.application.config.sorcery.configure do |config|
-  config.submodules = [:reset_password, :remember_me]
+  config.submodules = [:reset_password, :remember_me, :external]
   # config.session_timeout = 10.minutes
 
   #config.controller_to_realm_map = { 'application' => 'Application', 'users' => 'Users' }

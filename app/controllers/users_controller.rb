@@ -8,12 +8,12 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    if @user.save
-      auto_login(@user, params[:user][:remember_me])
-      redirect_back_or_to(new_session_path, notice: 'Signup successful')
+    if @user && @user.save
+      login(@user.email, params[:user][:password], params[:remember_me])
+      redirect_back_or_to(checks_path, notice: 'Signup successful')
     else
       flash.now[:alert] = 'Signup failed'
-      render 'users/new'
+      render action: :new
     end
   end
 
