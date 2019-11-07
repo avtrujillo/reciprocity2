@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_04_055857) do
+ActiveRecord::Schema.define(version: 2019_11_06_232750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,6 +147,43 @@ ActiveRecord::Schema.define(version: 2019_11_04_055857) do
     t.integer "max_age", default: 100
     t.integer "min_age", default: 18
     t.index ["gender_id"], name: "index_match_people_on_gender_id"
+  end
+
+  create_table "o_auth_credentials", force: :cascade do |t|
+    t.integer "o_auth_identity_id", null: false
+    t.string "token"
+    t.string "secret"
+    t.boolean "expires"
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["o_auth_identity_id"], name: "index_o_auth_credentials_on_o_auth_identity_id"
+  end
+
+  create_table "o_auth_identities", force: :cascade do |t|
+    t.string "type", null: false
+    t.string "uid", null: false
+    t.text "extra"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["type", "uid"], name: "index_o_auth_identities_on_type_and_uid", unique: true
+  end
+
+  create_table "o_auth_infos", force: :cascade do |t|
+    t.integer "o_auth_identity_id", null: false
+    t.string "name", null: false
+    t.string "email"
+    t.string "nickname"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "location"
+    t.string "description"
+    t.string "image"
+    t.integer "phone"
+    t.text "urls"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["o_auth_identity_id"], name: "index_o_auth_infos_on_o_auth_identity_id"
   end
 
   create_table "privacy_group_members", force: :cascade do |t|
