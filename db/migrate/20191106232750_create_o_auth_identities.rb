@@ -9,7 +9,7 @@ class CreateOAuthIdentities < ActiveRecord::Migration[5.2]
       t.text :extra
 
       t.timestamps
+      t.index [:type, :uid], unique: true
     end
   end
-  add_index :o_auth_identities, [:type, :uid], unique: true
 end

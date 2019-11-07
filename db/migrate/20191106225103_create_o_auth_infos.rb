@@ -15,7 +15,7 @@ class CreateOAuthInfos < ActiveRecord::Migration[5.2]
       t.text :urls
 
       t.timestamps
+      t.index :o_auth_identity_id
     end
-    add_index :o_auth_infos, :o_auth_identity_id
   end
 end
