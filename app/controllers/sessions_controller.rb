@@ -8,7 +8,6 @@ class SessionsController < ApplicationController
   def create
     @user = login(params[:email], params[:password])
     if @user
-      @user.sign_in_count += 1
       redirect_back_or_to(:users, notice: 'Login successful')
     else
       flash.new[:alert] = 'Login failed'
