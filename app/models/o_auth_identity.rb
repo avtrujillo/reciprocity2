@@ -34,4 +34,11 @@ class OAuthIdentity < ApplicationRecord
     end
   end
 
+  def self.provider_names
+    OmniAuth.strategies.each_with_object(Array.new) do |strategy, acc|
+      basename = strategy.to_s[22..-1]
+      acc << basename unless ['OAuth', 'OAuth2'].include?(basename)
+    end
+  end
+
 end

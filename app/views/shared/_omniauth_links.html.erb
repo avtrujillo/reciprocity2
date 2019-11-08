@@ -1,0 +1,4 @@
+<% OAuthIdentity.provider_names.each do |provider| %>
+  <% oauth_path = "/auth/#{provider.downcase}/callback" %>
+  <%= link_to "Sign in with #{provider.capitalize}", oauth_path %>
+<% end %>
