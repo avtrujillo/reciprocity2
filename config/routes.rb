@@ -48,6 +48,10 @@ Rails.application.routes.draw do
   resources :password_resets
   resources :users
 
+  get 'auth/facebook/callback', to: 'omniauth_callbacks#facebook'
+
+  # get 'auth/:provider/callback', to: 'omniauth_callbacks#create_or_update'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   # root 'compatibilities#index'
