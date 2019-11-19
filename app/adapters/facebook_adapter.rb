@@ -1,0 +1,2 @@
+module FacebookAdapter
+end
