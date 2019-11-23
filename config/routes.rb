@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   end
   resources :connection_requests
   resources :connections
-  #devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  #devise_for :users, :controllers => { :oauth => "users/oauth" }
   resources :categories
   resources :checks, only: [:create, :index]
   post "api/profiles/text_profile_item", to: "profile_items#create_text_profile_item", as: "create_text_profile_item"
@@ -47,6 +47,14 @@ Rails.application.routes.draw do
 
   resources :password_resets
   resources :users
+
+  post "oauth/callback" => "oauths#callback"
+  get "oauth/callback" => "oauths#callback" # for use with Github, Facebook
+  get "oauth/:provider" => "oauths#oauth", :as => :auth_at_provider
+
+  get 'auth/:provider/callback', to: 'oauths#callback'
+
+  # get 'auth/:provider/callback', to: 'oauth#create_or_update'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

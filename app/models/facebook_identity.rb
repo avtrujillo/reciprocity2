@@ -1,0 +1,3 @@
+class FacebookIdentity < OAuthIdentity
+
+end

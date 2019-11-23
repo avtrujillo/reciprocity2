@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
+  has_many :o_auth_identities, dependent: :destroy
 
   validates :password, length: { minimum: 6 }, if: -> { new_record? || changes[:crypted_password] }
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
@@ -84,7 +85,20 @@ class User < ApplicationRecord
   end
 
   def self.create_from_oauth(oauth_identity)
-    # TODO: this should replace from_omniauth
+    raise IdentityAlreadyAssignedError if oauth_identity.user_id
+    placeholder_password = SecureRandom.urlsafe_base64(15).tr('lIO0', 'sxyz')[0, 20]
+    # the above line is equivalent to the commented line below https://www.rubydoc.info/github/plataformatec/devise/Devise.friendly_token
+    # user.password = Devise.friendly_token[0,20]
+    new_user = User.create!(
+                       email: oauth_identity.email,
+                       password: placeholder_password,
+                       password_confirmation: placeholder_password,
+                       name: oauth_identity.name,
+                       image: oauth_identity.image
+    )
+    oauth_identity.user_id = new_user.id
+    oauth_identity.save
+    new_user
   end
 
   def self.from_omniauth(auth)
