@@ -19,8 +19,10 @@ class MoveFromDeviseToSorcery < ActiveRecord::Migration[5.2]
     add_column :users, :salt, :string
 
     User.all.each do |user|
-      user.salt = user.encrypted_password[0..28]
-      user.crypted_password = user.encrypted_password[29..-1]
+      user.update!(
+              salt: user.encrypted_password[0..28],
+              crypted_password: user.encrypted_password[29..-1]
+      )
     end
 
     remove_column :users, :encrypted_password, :string
@@ -30,7 +32,7 @@ class MoveFromDeviseToSorcery < ActiveRecord::Migration[5.2]
     add_column :users, :crypted_password, :string
 
     User.all.each do |user|
-      user.encrypted_password = (user.salt + user.crypted_password)
+      user.update!(encrypted_password : (user.salt + user.crypted_password))
     end
 
     remove_column :users, :salt, :string
