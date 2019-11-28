@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     if @user
       redirect_back_or_to(:users, notice: 'Login successful')
     else
-      flash.new[:alert] = 'Login failed'
+      flash.now[:alert] = 'Login failed'
       render action: 'new'
     end
   end
