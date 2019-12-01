@@ -72,7 +72,7 @@ class OauthsController < ApplicationController
 
   def set_token
     @access_token = @provider.process_callback(params, session)
-    provider_auth_hash = @provider.auth_hash(@provider.process_callback(params, session))
+    provider_auth_hash = @provider.auth_hash(@access_token)
     if provider_auth_hash[:expires_in] && provider_auth_hash[:expires_at].nil?
       provider_auth_hash[:expires_at] = Time.now + provider_auth_hash[:expires_in]
     end
