@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_06_232750) do
+ActiveRecord::Schema.define(version: 2019_12_01_222135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -232,6 +232,7 @@ ActiveRecord::Schema.define(version: 2019_11_06_232750) do
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
+    t.string "crypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.integer "sign_in_count", default: 0, null: false
@@ -251,9 +252,6 @@ ActiveRecord::Schema.define(version: 2019_11_06_232750) do
     t.string "facebook_token"
     t.bigint "default_privacy_setting_id"
     t.string "default_privacy_setting_type", default: "PrivacyPreset"
-    t.datetime "reset_password_token_expires_at"
-    t.string "crypted_password"
-    t.string "salt"
     t.string "remember_me_token"
     t.datetime "remember_me_token_expires_at"
     t.datetime "last_logout_at"
