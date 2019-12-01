@@ -259,7 +259,15 @@ Rails.application.config.sorcery.configure do |config|
     # Change default salt attribute.
     # Default: `:salt`
     #
-    # user.salt_attribute_name =
+    user.salt_attribute_name = nil
+    # Set this to :salt and create an appropriate migration if the encryption provider is ever changed
+    # to something other than BCrypt
+    # BCrypt (which is the default encryption provider for both Sorcery and Devise) already adds its own
+    # salt when hashing passwords, and appends it to the beginning of the :crypted_password field
+    # See https://www.freecodecamp.org/news/how-does-devise-keep-your-passwords-safe-d367f6e816eb/
+    # By leaving the :salt_attribute_name as nile, we ensure that currently stored password hashes
+    # are not invalidated.
+    # https://github.com/Sorcery/sorcery/issues/217
 
     # How many times to apply encryption to the password.
     # Default: 1 in test env, `nil` otherwise
@@ -281,6 +289,8 @@ Rails.application.config.sorcery.configure do |config|
     # Default: `:bcrypt`
     #
     # user.encryption_algorithm =
+    # If this is changed, be sure to set :salt_attribute_name, as other encryption providers
+    # may not add salts on their own like BCrypt does
 
     # Make this configuration inheritable for subclasses. Useful for ActiveRecord's STI.
     # Default: `false`
