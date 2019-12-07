@@ -28,12 +28,12 @@ class PrivacyGroupsController < ApplicationController
   #This method is a total violation of RESTful API - this should probably be fixed but I wanted to get the logic to work
   # Also this code is still buggy - I need to figure out why if you delete the facebook friends then try to recreate them, ActiveRecord chokes
   # MAybe it has to do with not being RESTful
+  # TODO: refactor this to be RESTful following the creation og FacebookPrivacyGroup
+  # TODO: test to make sure this still works after refactoring
   def facebook
-    if (current_user && current_user.facebook_token)
-      @privacy_group = PrivacyGroup.create_facebook_group(current_user.facebook_token)
-    end
+    fb_pg = FacebookPrivacyGroup.find_or_create_from_owner_id(current_user.id)
     respond_to do |format|
-      if @privacy_group
+      if fb_pg
         format.html { redirect_to privacy_groups_url, notice: 'Privacy group was successfully created.' }
       else
         format.html { redirect_to privacy_groups_url, notice: 'Privacy group was not created.' }
