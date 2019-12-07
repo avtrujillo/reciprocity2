@@ -4,7 +4,7 @@ class OauthsController < ApplicationController
   skip_before_action :require_login
 
   def oauth
-    login_at(params[:provider])
+    login_at(params[:provider] || params['provider'])
   end
 
   def callback
@@ -78,15 +78,36 @@ class OauthsController < ApplicationController
     end
     provider_auth_hash[:expires_in] = nil
     provider_auth_hash[:expires] = !!provider_auth_hash[:expires_at]
+    #if @provider.is_a?(Sorcery::Providers::Tumblr)
+    #  @access_token.consumer.site = 'https://api.tumblr.com'
+    #  @access_token.consumer.options[:site] = "https://api.tumblr.com"
+    #  # user info is obtained from api.tumblr.com rather than www.tumblr.com
+    #  # since we've already obtained the access token, we have no further need
+    #  # of www.tumblr.com
+    #end
     @oauth_ident_hash.merge(provider_auth_hash)
   end
 
   def set_user_info
-    user_info_response = @access_token.get(@provider.user_info_path)
-    user_info = JSON.parse(user_info_response.body, symbolize_names: true)
+    user_info = if @provider.is_a?(Sorcery::Providers::Tumblr)
+      @tumblr_client = tumblr_client_from_access_token
+      @tumblr_client.info
+    else
+      user_info_response = @access_token.get(@provider.user_info_path)
+      JSON.parse(user_info_response.body, symbolize_names: true)
+    end
     user_info[:uid] ||= user_info[:id]
     user_info[:id] = nil
     @oauth_ident_hash.merge!(user_info.compact)
+  end
+
+  def tumblr_client_from_access_token
+    Tumblr::Client.new(
+        consumer_key: @access_token.consumer.key,
+        consumer_secret: @access_token.consumer.secret,
+        oauth_token: @access_token.token,
+        oauth_token_secret: @access_token.secret
+    )
   end
 
 end

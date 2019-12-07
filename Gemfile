@@ -87,4 +87,6 @@ gem 'faker'
 gem 'webpacker'
 gem 'react-rails'
 
-gem "sorcery", "~> 0.14.0"
+gem 'tumblr_client'
+
+gem "sorcery", git: 'https://github.com/avtrujillo/sorcery', branch: 'oauth1'
