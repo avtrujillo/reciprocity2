@@ -48,13 +48,11 @@ Rails.application.routes.draw do
   resources :password_resets
   resources :users
 
-  post "oauth/callback" => "oauths#callback"
-  get "oauth/callback" => "oauths#callback" # for use with Github, Facebook
-  get "oauth/:provider" => "oauths#oauth"#, :as => :auth_at_provider
-
-  get 'auth/:provider/callback', to: 'oauths#callback'
-
-  # get 'auth/:provider/callback', to: 'oauth#create_or_update'
+  OAuthIdentity.provider_names.each do |provider|
+    post "users/auth/#{provider}/callback" => "oauth/#{provider}#callback"
+    get "users/auth/#{provider}/callback" => "oauth/#{provider}#callback"
+    get "oauth/#{provider}" => "oauth/#{provider}#redirect_for_login"
+  end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
