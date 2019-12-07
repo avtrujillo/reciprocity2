@@ -1,17 +1,19 @@
 class UserIdentityPairer
   # TODO: add logic to deal with identities with identical emails but different users
-  attr_reader :user
-  attr_reader :identity
+  attr_reader :user, :identity
 
   def initialize(auth_hash, current_user_id = nil, update_attributes = false)
     # the controller that created this object should log the user in after the initialize
     # method of this object has finished if the user is not already logged in
     @current_user_id = current_user_id
-    @auth_hash = auth_hash
+    @identity_class = OAuthIdentity.get_provider_subclass(auth_hash.delete(:provider))
+    @auth_hash = identity_class.format_auth_hash(auth_hash.symbolize_keys)
     @auth_hash[:type] = identity_class.to_s
     @identity = identity_class.find_by(uid: @auth_hash[:uid])
     create_identity_if_needed # also attempts to set @current_user_id
     find_or_create_user
+    user.save!
+    identity.save!
     # TODO: update user and/or identity attributes if update_attributes argument is true
     # Perhaps have it be a hash of what things should be updated?
   end
@@ -54,7 +56,7 @@ class UserIdentityPairer
       # the user will be logged in by the calling controller
     else
       @new_identity = true
-      @identity = OAuthIdentity.new(@auth_hash)
+      @identity = identity_class.new_from_auth_hash(@auth_hash)
       @identity.user_id = @current_user_id # this could still be nil at this point
     end
     @current_user_id = @identity.user_id # this could still be nil at this point
@@ -74,7 +76,7 @@ class UserIdentityPairer
   def create_placeholder_email
     # TODO: figure out what to do when creating a new user from an auth hash that
     # does not include an email address
-    "#{@auth_hash[:type]}_#{@auth_hash[:uid].to_s}@#{ENV['ROOT_URL']}"
+    "#{@auth_hash[:type]}_#{@auth_hash[:uid].to_s}@reciprocity.io"
   end
 
 end
