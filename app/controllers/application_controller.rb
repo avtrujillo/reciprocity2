@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   #before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :require_login
+  before_action :require_login # defined by sorcery gem
 
   protected
 
@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   end
 =end
 
-  def not_authenticated
+  def not_authenticated # called by require_login
     redirect_to '/sign_in', alert: 'Login required'
   end
 
