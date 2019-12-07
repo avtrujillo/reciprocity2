@@ -101,18 +101,6 @@ class User < ApplicationRecord
     new_user
   end
 
-  def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
-      user.password = SecureRandom.urlsafe_base64(15).tr('lIO0', 'sxyz')[0, 20]
-      # the above line is equivalent to the commented line below https://www.rubydoc.info/github/plataformatec/devise/Devise.friendly_token
-      # user.password = Devise.friendly_token[0,20]
-      user.name = auth.info.name   # assuming the user model has a name
-      user.image = auth.info.image # assuming the user model has an image
-      user.facebook_token = auth.credentials.token
-    end
-  end
-
   def get_relevant_users()
     # TODO(sdspikes): once there's a setting for who you're visible
     # to, check all users to see if they want to be visible to you
