@@ -1,6 +1,6 @@
 class UserMismatchError < StandardError
   def message
-    "This account is already associated with a different user"
+    "This account is associated with a different user than the one that is currently signed in"
     # TODO: figure out what to do if a user e.g. signs in with facebook for the first time,
     # creating a new user in the process, logs out, signs in with tumblr for the first time,
     # creating another new user in the process, then tries to log in with
