@@ -83,7 +83,7 @@ Rails.application.config.sorcery.configure do |config|
 
     config.tumblr.key = ENV['TUMBLR_APP_ID']
   config.tumblr.secret = ENV['TUMBLR_APP_SECRET']
-  config.tumblr.callback_url = "#{ENV['ROOT_URL']}/auth/tumblr/callback"
+  config.tumblr.callback_url = "#{ENV['ROOT_URL']}/users/auth/tumblr/callback"
 
   # You can change it by your local ca_file. i.e. '/etc/pki/tls/certs/ca-bundle.crt'
   # Path to ca_file. By default use a internal ca-bundle.crt.
@@ -117,7 +117,7 @@ Rails.application.config.sorcery.configure do |config|
   #
   config.facebook.key = ENV['FB_APP_ID'] || ENV['TEST_FB_APP_ID']
   config.facebook.secret = ENV['FB_APP_SECRET'] || ENV['TEST_FB_APP_SECRET']
-  config.facebook.callback_url = "#{ENV['ROOT_URL']}/auth/facebook/callback"
+  config.facebook.callback_url = "#{ENV['ROOT_URL']}/users/auth/facebook/callback"
   config.facebook.user_info_path = "me?fields=email"
   config.facebook.user_info_mapping = {
       :email => "email"
