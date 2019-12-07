@@ -1,7 +1,9 @@
 class ExternalPrivacyGroup < PrivacyGroup
   # abstract class for e.g. FacebookPrivacyGroup
   # subclasses should be sure to implement :populate
+  # TODO: create TumblrPrivacyGroup
   validate :must_have_identity
+  validates_uniqueness_of :owner_id, scope: type
 
   def self.find_or_create_from_owner_id(owner_id)
     find_by(owner_id: owner_id) || create_from_owner_id(owner_id)
