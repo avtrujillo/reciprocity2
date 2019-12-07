@@ -36,13 +36,13 @@ class UserIdentityPairer
 
   def flash_success_message
     if @new_user && @new_identity
-      "Created new user with #{provider}"
+      "Created new user with #{identity_class.provider}"
     elsif @new_identity
-      "Linked with #{provider}"
+      "Linked with #{identity_class.provider}"
     elsif @new_user
       # not possible
     else
-      "Logged in with #{provider}"
+      "Logged in with #{identity_class.provider}"
     end
   end
 

@@ -39,14 +39,16 @@ module Oauth
 
     def success
       auto_login(@user) unless current_user
-      flash.now[:success] = @user_identity_pairer.flash_success_message
-      redirect_to checks_path
+      redirect_to checks_path, flash: {
+          success: @user_identity_pairer.flash_success_message
+      }
     end
 
     def failure
-      flash.now[:failure] = 'external login failed'
       # TODO: improve error messages
-      render 'sessions/new'
+      redirect_to new_session_path, flash: {
+          alert: 'external login failed'
+      }
     end
 
     def set_provider
