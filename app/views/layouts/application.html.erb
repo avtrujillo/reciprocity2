@@ -36,6 +36,13 @@
       </div>
     </nav>
     <p id="notice"><%= notice %></p>
+    <% flash_colors = {alert: 'red', error: 'red', success: 'green', failure: 'red'} %>
+    <% flash_colors.each_pair do |flash_key, flash_color| %>
+      <% if flash[flash_key] %>
+        <% pstyle = {style: "color:#{flash_color.to_s}"} %>
+        <%= simple_format flash[flash_key], pstyle, sanitize: true%>
+      <% end %>
+    <% end%>
 
     <%= yield %>
     <!-- Footer -->
