@@ -18,7 +18,6 @@ class UsersController < ApplicationController
   end
 
   def edit
-    # TODO
   end
 
   def update
@@ -33,6 +32,9 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+    unless @user == current_user
+      render inline: '403 Forbidden', status: :forbidden
+    end
   end
 
 end
