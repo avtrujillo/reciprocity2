@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  #TODO: show, delete, and destroy
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   skip_before_action :require_login, only:[:new, :create]
 
@@ -21,7 +22,13 @@ class UsersController < ApplicationController
   end
 
   def update
-    # TODO
+    validate_password
+    return if performed?
+    if @user.update(user_params)
+      redirect_to(edit_user_path(@user), notice: 'User updated successfully')
+    else
+      redirect_back_or_to(edit_user_path(@user), error: 'update failed')
+    end
   end
 
   private
@@ -34,6 +41,17 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     unless @user == current_user
       render inline: '403 Forbidden', status: :forbidden
+    end
+  end
+
+  def validate_password
+    return if performed?
+    pw = user_params[:password]
+    unless pw == user_params[:password_confirmation]
+      redirect_back_or_to(edit_user_path(@user), error: 'password and password confirmation must match')
+    end
+    unless @user.valid_password?(pw)
+      redirect_back_or_to(edit_user_path(@user), error: 'invalid password')
     end
   end
 
