@@ -89,4 +89,4 @@ gem 'react-rails'
 
 gem 'tumblr_client'
 
-gem "sorcery", git: 'https://github.com/avtrujillo/sorcery', branch: 'tumblr'
+gem "sorcery", git: 'https://github.com/avtrujillo/sorcery', branch: 'tumblr-discord'

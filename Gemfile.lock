@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/avtrujillo/sorcery
-  revision: 6debb6fe99bf07b523a6f0a3b360c5901f81723c
-  branch: tumblr
+  revision: f56bde6e2f193cb67a3c96cde434a3809e848291
+  branch: tumblr-discord
   specs:
     sorcery (0.14.0)
       bcrypt (~> 3.1)
