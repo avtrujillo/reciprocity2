@@ -177,6 +177,7 @@ ActiveRecord::Schema.define(version: 2019_12_07_124719) do
     t.datetime "updated_at", null: false
     t.string "type"
     t.index ["owner_id"], name: "index_privacy_groups_on_owner_id"
+    t.index ["type", "owner_id"], name: "index_privacy_groups_on_type_and_owner_id", unique: true
   end
 
   create_table "privacy_presets", force: :cascade do |t|
