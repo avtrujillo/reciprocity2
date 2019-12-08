@@ -50,4 +50,18 @@ class OAuthIdentity < ApplicationRecord
     input_hash # can be overriden for provider-specific behavior
   end
 
+  def adapter
+    @adapter ||= adapter_class.new(self.token)
+  end
+
+  private
+
+  def adapter_class
+    self.class.adapter_class
+  end
+
+  def self.adapter_class
+    const_get(provider.to_s.capitalize + 'Adapter')
+  end
+
 end

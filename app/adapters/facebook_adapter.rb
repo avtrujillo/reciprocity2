@@ -1,15 +1,14 @@
 class FacebookAdapter
 
+  attr_reader :fbgraph
+
   def initialize(token)
-    @token = token
+    @token ||= token
+    @fbgraph = Koala::Facebook::API.new(@token)
   end
 
   def get_me
     get_object('me')
-  end
-
-  def fbgraph
-    @fbgraph ||= Koala::Facebook::API.new(@token)
   end
 
   def get_object(id, args = {}, options = {}, &block)

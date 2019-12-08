@@ -3,7 +3,6 @@ class ExternalPrivacyGroup < PrivacyGroup
   # subclasses should be sure to implement :populate
   # TODO: create TumblrPrivacyGroup
   validate :must_have_identity
-  validates_uniqueness_of :owner_id, scope: type
 
   def self.find_or_create_from_owner_id(owner_id)
     find_by(owner_id: owner_id) || create_from_owner_id(owner_id)
@@ -39,7 +38,7 @@ class ExternalPrivacyGroup < PrivacyGroup
   end
 
   def adapter
-    @adapter ||= adapter_class.new(owner_identity.token)
+    @adapter ||= owner_identity.adapter
   end
 
   def must_have_identity
@@ -65,6 +64,10 @@ class ExternalPrivacyGroup < PrivacyGroup
     klass = const_get(provider_name + 'Identity')
     raise 'invalid identity class' unless klass.superclass == OAuthIdentity
     klass
+  end
+
+  def adapter_class
+    self.class.adapter_class
   end
 
   def self.adapter_class

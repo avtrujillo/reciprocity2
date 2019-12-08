@@ -69,7 +69,7 @@ module Oauth
       end
       provider_auth_hash[:expires_in] = nil
       provider_auth_hash[:expires] = !!provider_auth_hash[:expires_at]
-      @oauth_ident_hash.merge(provider_auth_hash)
+      @oauth_ident_hash.merge!(provider_auth_hash)
     end
 
     def set_user_info
