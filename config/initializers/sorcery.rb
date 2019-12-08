@@ -79,10 +79,14 @@ Rails.application.config.sorcery.configure do |config|
   # What providers are supported by this app
   # i.e. [:twitter, :facebook, :github, :linkedin, :xing, :google, :liveid, :salesforce, :slack, :line].
   # Default: `[]`
-  config.external_providers = [:tumblr, :facebook]
+  config.external_providers = [:tumblr, :facebook, :discord]
 
-  config.tumblr.key = '5dFkTN2VXig6rrit5Ge40vzima0TLRtE7fVaBAZWHPFC3uR4DA'
-  config.tumblr.secret = '3LAVrML9CZoY1IXBxgF8mVaY6Z8v8yZPCU46Goya1i2J4DWpCm'
+  config.discord.key = ENV['DISCORD_APP_ID']
+  config.discord.secret = ENV['DISCORD_APP_SECRET']
+  config.discord.callback_url = "#{ENV['ROOT_URL']}/users/auth/discord/callback"
+
+  config.tumblr.key = ENV['TUMBLR_APP_ID']
+  config.tumblr.secret = ENV['TUMBLR_APP_SECRET']
   config.tumblr.callback_url = "#{ENV['ROOT_URL']}/users/auth/tumblr/callback"
 
   # You can change it by your local ca_file. i.e. '/etc/pki/tls/certs/ca-bundle.crt'
