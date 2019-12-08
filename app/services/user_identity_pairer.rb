@@ -13,6 +13,8 @@ class UserIdentityPairer
     create_identity_if_needed # also attempts to set @current_user_id
     find_or_create_user
     user.save!
+    identity.token = auth_hash[:token]
+    identity.expires_at = auth_hash[:expires_at]
     identity.save!
     # TODO: update user and/or identity attributes if update_attributes argument is true
     # Perhaps have it be a hash of what things should be updated?

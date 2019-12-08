@@ -1,7 +1,7 @@
 class FacebookPrivacyGroup < ExternalPrivacyGroup
 
   def populate
-    members_cache = self.members
+    members_cache = privacy_group_members
     friend_users.each do |user|
       unless members_cache.include?(user)
         PrivacyGroupMember.create(privacy_group_id: @privacy_group.id, user_id: user.id)
