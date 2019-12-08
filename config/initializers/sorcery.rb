@@ -81,8 +81,8 @@ Rails.application.config.sorcery.configure do |config|
   # Default: `[]`
   config.external_providers = [:tumblr, :facebook]
 
-    config.tumblr.key = ENV['TUMBLR_APP_ID']
-  config.tumblr.secret = ENV['TUMBLR_APP_SECRET']
+  config.tumblr.key = '5dFkTN2VXig6rrit5Ge40vzima0TLRtE7fVaBAZWHPFC3uR4DA'
+  config.tumblr.secret = '3LAVrML9CZoY1IXBxgF8mVaY6Z8v8yZPCU46Goya1i2J4DWpCm'
   config.tumblr.callback_url = "#{ENV['ROOT_URL']}/users/auth/tumblr/callback"
 
   # You can change it by your local ca_file. i.e. '/etc/pki/tls/certs/ca-bundle.crt'
